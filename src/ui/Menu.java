@@ -35,24 +35,27 @@ public class Menu {
 	}
 	
 	
-	public void doOption(int option, BufferedReader br) throws IOException {
+	public void doOption(int option, BufferedReader br) throws IOException{
 		
 		switch(option) {
 		
 		case 1:
-			System.out.println("| ------ ADD BILLBOARD ------ |");
+			System.out.println("----------------------------------------------------");
+			System.out.println("                    ADD BILLBOARD");
+			System.out.println("----------------------------------------------------");
 			readBillboardData(br);
 			
 			break;
 
 		case 2:
-			System.out.println("| ------ BILLBOARDS ------ |");
+			System.out.println("--------------------------------------------------------------------------------");
+			System.out.println("                                 BILLBOARDS");
+			System.out.println("--------------------------------------------------------------------------------");
 			showBillboards();
 			
 			break;
 
 		case 3:
-			System.out.println("| ------ HAZARD REPORT ------ |");
 			showHazardReport();
 			break;
 
@@ -69,6 +72,9 @@ public class Menu {
 	}
 	
 	public void startProgram() throws IOException{
+		infrastructureDepartment.importBillboards();
+		infrastructureDepartment.saveBillboards();
+		
 		int exit = 4;
 		int option = 0;
 		do {
@@ -80,7 +86,7 @@ public class Menu {
 	}
 	
 	
-	public void readBillboardData(BufferedReader br) throws IOException {
+	public void readBillboardData(BufferedReader br) throws IOException{
 		System.out.println("Please write the billboard data as follows:\n width++height++true/false++brand: ");
 		System.out.println("Note:\nIf the billboard is in use, write true.\nIf the billboard is not in use, write false");
 		
@@ -92,6 +98,8 @@ public class Menu {
 			boolean inUse = Boolean.parseBoolean(parts[2]);
 			String brand = parts[3];
 			infrastructureDepartment.addBillboard(width, height, inUse, brand);
+			infrastructureDepartment.exportToFileCSV(width, height, inUse, brand);
+			infrastructureDepartment.saveBillboards();
 		}
 		
 		System.out.println("Billboard added!\n");
@@ -116,17 +124,21 @@ public class Menu {
 				dangerousBillboards.add(billboards.get(i));
 			}
 		}
+		
 		return dangerousBillboards;
 	}
 	
-	public void showHazardReport() {
-		System.out.println("==============================================");
-		System.out.println("          DANGEROUS BILLBOARD REPORT");
-		System.out.println("==============================================");
+	
+	public void showHazardReport() throws IOException {
+		infrastructureDepartment.exportHazardReport(hazardReport());
+		
+		System.out.println("===============================================================================");
+		System.out.println("                        DANGEROUS BILLBOARD REPORT");
+		System.out.println("===============================================================================");
 		System.out.println("The dangerous billboards are: ");
 		
 		for(int i=0; i<hazardReport().size(); i++) {
-			System.out.println((i+1)+". Billboard of "+hazardReport().get(i).getBrand()+", with area equal to "+hazardReport().get(i).calculateArea()+" square centimeters");
+			System.out.println((i+1)+". Billboard of "+hazardReport().get(i).getBrand()+", with area equal to "+hazardReport().get(i).calculateArea()+" square centimeters.");
 		}
 			
 	}
