@@ -9,8 +9,8 @@ import model.Billboard;
 import model.InfrastructureDepartment;
 
 public class Menu {
-	InfrastructureDepartment infrastructureDepartment;
-	List<Billboard> billboards;
+	public InfrastructureDepartment infrastructureDepartment;
+	public List<Billboard> billboards;
 	
 	
 	public Menu() {

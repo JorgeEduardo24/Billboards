@@ -9,15 +9,9 @@ public class Billboard implements Serializable{
 	private double width;
 	private boolean inUse;
 	private String brand;
-	private static int billboardCounter;
-	private int totalBillboards;
-	
-	private Billboard() {
-		this.totalBillboards = ++Billboard.billboardCounter;
-	}
+
 	
 	public Billboard(double width, double height, boolean inUse, String brand) {
-		this();
 		this.width = width;
 		this.height = height;
 		this.inUse = inUse;
@@ -55,14 +49,7 @@ public class Billboard implements Serializable{
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	
-	public int getTotalBillboards() {
-		return totalBillboards;
-	}
 
-	public void setTotalBillboards(int totalBillboards) {
-		this.totalBillboards = totalBillboards;
-	}
 
 	@Override
 	public String toString() {
